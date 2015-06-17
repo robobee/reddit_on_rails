@@ -20,6 +20,7 @@ default: &default
   # For details on connection pooling, see rails configuration guide
   # http://guides.rubyonrails.org/configuring.html#database-pooling
   pool: 5
+  username: <%= ENV["DB_USER"] %>
 
 development:
   <<: *default
@@ -81,5 +82,4 @@ test:
 production:
   <<: *default
   database: reddit_on_rails_production
-  username: reddit_on_rails
   password: <%= ENV['REDDIT_ON_RAILS_DATABASE_PASSWORD'] %>
