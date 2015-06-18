@@ -13,6 +13,7 @@ feature 'User Sign In' do
     fill_in 'Password',              :with => user.password
     click_button 'Log in'
 
+    expect(current_path).to eq root_path
     within 'nav.navbar' do
         expect(page).to have_content(user.email)
     end
@@ -28,6 +29,7 @@ feature 'User Sign In' do
     fill_in 'Password',              :with => 'password'
     click_button 'Log in'
 
+    expect(current_path).to eq new_user_session_path
     within 'nav.navbar' do
         expect(page).not_to have_content(user.email)
     end

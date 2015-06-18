@@ -8,12 +8,15 @@
 </head>
 <body>
 
-<%= render 'header' %>
+  <%= render 'header' %>
 
-<p class="notice"><%= notice %></p>
-<p class="alert"><%= alert %></p>
-
-<%= yield %>
+  <div class="container">
+    <div id="alerts">
+      <%= content_tag :div, alert, class: "alert alert-danger" if alert %>
+      <%= content_tag :div, notice, class: "alert alert-success" if notice %>
+    </div>
+    <%= yield %>
+  </div>
 
 </body>
 </html>
