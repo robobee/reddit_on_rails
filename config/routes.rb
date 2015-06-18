@@ -4,6 +4,8 @@ Rails.application.routes.draw do
 
   root "pages#index"
 
-  resources :links
+  resources :links do
+    resources :comments
+  end
 
 end

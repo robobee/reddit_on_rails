@@ -1,11 +1,4 @@
-<div class="media">
-  <div class="media-left">
-    <%= link_to(@link.url) do %>
-      <img class="media-object" src="http://lorempixel.com/64/64/">
-    <% end %>
-  </div>
-  <div class="media-body">
-    <h4 class="media-heading"><%= link_to(@link.title, @link.url) %></h4>
-  </div>
-</div>
+<%= render @link %>
 <hr>
+<%= render @comments %>
+<%= render 'comments/form', locals: { link: @link, comment: @comment } %>

@@ -2,10 +2,9 @@ class LinksController < ApplicationController
 
   before_action :set_link, only: [:show, :edit]
   
-  def index
-  end
-
   def show
+    @comment = @link.comments.build
+    @comments = @link.comments.includes(:user)
   end
 
   def new
@@ -20,12 +19,6 @@ class LinksController < ApplicationController
       @link = Link.new
       render 'new'
     end
-  end
-
-  def edit
-  end
-
-  def update
   end
 
   private

@@ -2,8 +2,8 @@ require 'rails_helper'
 
 feature 'Main Page Link Feed' do
 
-  let(:user) { create(:user) }
-  let!(:another_user) { create(:user) }
+  let(:user) { create(:user_with_links) }
+  let!(:another_user) { create(:user_with_links) }
   let(:my_link) { user.links.first }
   let(:other_link) { another_user.links.first }
 
@@ -13,7 +13,6 @@ feature 'Main Page Link Feed' do
 
     visit root_path
 
-    save_and_open_page
     expect(page).to have_link(my_link[:title], href: my_link[:url])
     expect(page).to have_link(other_link[:title], href: other_link[:url])
 
