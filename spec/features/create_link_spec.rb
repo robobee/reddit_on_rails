@@ -6,14 +6,7 @@ feature 'Create Link' do
 
   scenario 'successfully creates link for a signed in user' do
 
-    visit root_path
-    click_link 'Sign in'
-
-    fill_in 'Email',                 :with => user.email
-    fill_in 'Password',              :with => user.password
-    click_button 'Log in'
-
-    expect(current_path).to eq root_path
+    sign_in(user)
 
     link = { url: 'http://google.com', title: 'Awesome Search Engine!' }
 
