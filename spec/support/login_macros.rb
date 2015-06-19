@@ -9,9 +9,9 @@ module LoginMacros
     click_button 'Log in'
   end
 
-  def login_user
+  def login_user(options = {})
     @request.env["devise.mapping"] = Devise.mappings[:user]
-    user = FactoryGirl.create(:user)
+    user = options[:user] || FactoryGirl.create(:user)
     sign_in user
   end
 

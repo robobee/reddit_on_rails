@@ -5,6 +5,9 @@ Rails.application.routes.draw do
   root "pages#index"
 
   resources :links do
+    member do
+      post 'vote'
+    end
     resources :comments
   end
 

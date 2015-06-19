@@ -79,12 +79,68 @@ RSpec.describe LinksController, type: :controller do
     end
 
     context 'when not logged in' do
-      it 'redirects to root_path' do
+      it 'redirects to new_user_session_path' do
         post :create, link: attributes_for(:link)
         expect(response).to redirect_to new_user_session_path
       end
     end
 
+  end
+
+  describe 'POST #vote' do
+    let(:link) { create(:link) }
+    
+    it "assigns link to @link" do
+      post :vote, id: link.id, type: 'up'
+      expect(assigns(:link)).to eq link
+    end
+
+    context 'when logged in' do
+
+      context 'as other user' do
+        before(:each) do
+          login_user
+        end
+
+        it 'saves vote to database' do
+          expect {
+            post :vote, id: link.id, type: 'up'
+          }.to change(LinkVote, :count).by(1)
+        end
+        it 'redirects to :show' do
+          post :vote, id: link.id, type: 'up'
+          expect(response).to redirect_to link_path(link)
+        end
+      end
+
+      context 'as the same user' do
+        before(:each) do
+          login_user(user: link.user)
+        end
+
+        it 'does not save vote to database' do
+          expect {
+            post :vote, id: link.id, type: 'up'
+          }.not_to change(LinkVote, :count)
+        end
+        it 'redirects to :show' do
+          post :vote, id: link.id, type: 'up'
+          expect(response).to redirect_to link_path(link)
+        end
+      end
+    end
+
+    context 'when not logged in' do
+      it 'does not save vote to database' do
+        expect {
+          post :vote, id: link.id, type: 'up'
+        }.not_to change(LinkVote, :count)
+      end
+      it 'redirects to new_user_session_path' do
+        post :vote, id: link.id, type: 'up'
+        expect(response).to redirect_to new_user_session_path
+      end
+    end
   end
 
 end

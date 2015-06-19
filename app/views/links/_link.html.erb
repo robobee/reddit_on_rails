@@ -1,4 +1,15 @@
-<div class="media">
+<div class="media link-main">
+  <div class="media-left">
+    <%= link_to(vote_link_path(link, type: "up"), method: :post,
+      class: 'upvote') do %>
+      <span class="glyphicon glyphicon-thumbs-up"></span>    
+    <% end %>
+    <span class="votes"><%= link.votes %></span>
+    <%= link_to(vote_link_path(link, type: "down"), method: :post,
+      class: 'downvote') do %>
+      <span class="glyphicon glyphicon-thumbs-down"></span>    
+    <% end %>
+  </div>
   <div class="media-left">
     <%= link_to(link.url) do %>
       <img class="media-object" src="http://lorempixel.com/64/64/">

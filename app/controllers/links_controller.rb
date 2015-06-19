@@ -1,7 +1,7 @@
 class LinksController < ApplicationController
 
-  before_action :set_link, only: [:show]
-  before_action :authenticate_user!, only: [:new, :create]
+  before_action :set_link, only: [:show, :vote]
+  before_action :authenticate_user!, only: [:new, :create, :vote]
   
   def show
     @comment = @link.comments.build
@@ -22,6 +22,18 @@ class LinksController < ApplicationController
     end
   end
 
+  def vote
+    value = params[:type] == "up" ? 1 : -1
+    link_vote = @link.link_votes.build(user_id: current_user.id, value: value)
+    if link_vote.save
+      redirect_to @link, notice: 'Thank you for voting.'
+    else
+      alert = "Something went wrong."
+      alert = "You can't vote on your own links." if link_vote.errors[:user_id]
+      redirect_to @link, alert: alert
+    end
+  end
+
   private
 
     def links_params
@@ -30,5 +42,7 @@ class LinksController < ApplicationController
    
     def set_link
       @link = Link.find(params[:id])
+    rescue ActiveRecord::RecordNotFound
+      redirect_to root_url, alert: 'Something went wrong'
     end
 end
