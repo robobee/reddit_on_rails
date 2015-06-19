@@ -5,17 +5,22 @@
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
 
   <%= render 'header' %>
 
-  <div class="container">
-    <div id="alerts">
-      <%= content_tag :div, alert, class: "alert alert-danger" if alert %>
-      <%= content_tag :div, notice, class: "alert alert-success" if notice %>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-8 col-sm-8 col-xs-8">
+        <%= render 'alerts' %>
+        <%= yield %>
+      </div>
+      <div class="col-md-4 col-sm-4 col-xs-4">
+        <%= yield :sidebar %>
+      </div>
     </div>
-    <%= yield %>
   </div>
 
 </body>

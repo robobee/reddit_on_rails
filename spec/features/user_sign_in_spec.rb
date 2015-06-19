@@ -9,9 +9,7 @@ feature 'User Sign In' do
     sign_in(user)
 
     expect(current_path).to eq root_path
-    within 'nav.navbar' do
-        expect(page).to have_content(user.email)
-    end
+    expect(page).to have_content(user.email)
     expect(page).to have_content 'Signed in successfully.'
   end
 
@@ -25,9 +23,7 @@ feature 'User Sign In' do
     click_button 'Log in'
 
     expect(current_path).to eq new_user_session_path
-    within 'nav.navbar' do
-        expect(page).not_to have_content(user.email)
-    end
+    expect(page).not_to have_content(user.email)
     expect(page).not_to have_content 'Signed in successfully.'
     expect(page).to have_content 'Invalid email or password.'
   end
