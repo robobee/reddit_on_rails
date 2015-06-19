@@ -1,7 +1,7 @@
 class PagesController < ApplicationController
   
   def index
-    @links = Link.all
+    @links = Link.by_votes.page(params[:page] || 1)
   end
   
 end

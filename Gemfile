@@ -15,6 +15,7 @@ gem 'jquery-rails'
 gem 'bcrypt', '~> 3.1.7'
 gem 'puma'
 gem 'devise'
+gem 'will_paginate', '~> 3.0.6'
 
 group :development do
   gem 'pry-byebug'
