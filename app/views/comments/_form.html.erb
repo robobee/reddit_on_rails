@@ -1,4 +1,12 @@
 <%= form_for([@link, @comment]) do |f| %>
+  <% if @comment.errors.any? %>
+    <div id="error_explanation">
+      <% @comment.errors.full_messages.each do |msg| %>
+        <div class="alert alert-danger"><%= msg %></div>
+      <% end %>
+    </div>
+  <% end %>
+  
   <div class="form-group">
     <%= f.text_field :content, class: "form-control" %>
   </div>

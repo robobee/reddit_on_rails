@@ -4,11 +4,11 @@ Rails.application.routes.draw do
 
   root "pages#index"
 
-  resources :links do
+  resources :links, only: [:show, :new, :create] do
     member do
       post 'vote'
     end
-    resources :comments
+    resources :comments, only: [:create]
   end
 
 end

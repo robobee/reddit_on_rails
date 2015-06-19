@@ -21,6 +21,19 @@ feature 'Vote on links' do
       assert_text 1
     end
 
+    within ".link-main" do
+      find('.upvote').click
+    end
+    expect(page).to have_content 'You have already voted.'
+
+    within ".link-main" do
+      find('.downvote').click
+    end
+
+    within ".link-main .votes" do
+      assert_text -1
+    end
+
   end
 
 end

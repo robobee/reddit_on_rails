@@ -9,11 +9,12 @@ class CommentsController < ApplicationController
       redirect_to root_path, alert: 'Something went wrong.'
     end
 
-    comment = current_user.comments.build(comment_params.merge! link_id: @link.id)
-    if comment && comment.save
+    @comment = current_user.comments.build(comment_params.merge! link_id: @link.id)
+    if @comment && @comment.save
       redirect_to @link, notice: 'Comment was successfully added.'
     else
-      redirect_to @link, notice: 'Something went wrong.'
+      @comments = @link.comments.includes(:user)
+      render 'links/show'
     end
   end
 

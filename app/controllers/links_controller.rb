@@ -17,20 +17,30 @@ class LinksController < ApplicationController
     if @link.save
       redirect_to @link, notice: 'Link was successfully created.'
     else
-      @link = Link.new
       render 'new'
     end
   end
 
   def vote
     value = params[:type] == "up" ? 1 : -1
-    link_vote = @link.link_votes.build(user_id: current_user.id, value: value)
-    if link_vote.save
-      redirect_to @link, notice: 'Thank you for voting.'
+    @vote = @link.link_votes.where(user_id: current_user.id).first
+
+    if @vote
+      if @vote.value == value
+        redirect_to @link, notice: 'You have already voted.'
+      else
+        @vote.update_attributes(value: value)
+        redirect_to @link, notice: 'Thank you for voting.'
+      end
     else
-      alert = "Something went wrong."
-      alert = "You can't vote on your own links." if link_vote.errors[:user_id]
-      redirect_to @link, alert: alert
+      link_vote = @link.link_votes.build(user_id: current_user.id, value: value)
+      if link_vote.save
+        redirect_to @link, notice: 'Thank you for voting.'
+      else
+        alert = "Something went wrong."
+        alert = "You can't vote on your own links." if link_vote.errors[:user_id]
+        redirect_to @link, alert: alert
+      end
     end
   end
 
