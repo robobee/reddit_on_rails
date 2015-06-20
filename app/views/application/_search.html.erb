@@ -1,0 +1,6 @@
+<%= form_tag(root_path, method: "get", role:"search", class: "form-inline") do %>
+  <div class="form-group">
+    <%= text_field_tag(:query, params[:query], class: "form-control", placeholder: "Search") %>
+  </div>
+  <%= submit_tag("Search", class:"btn btn-default") %>
+<% end %>
